@@ -57,10 +57,13 @@
 
 [] Recipe show page - include times saved
 
-[] Add category model class
+[x] Add category model class
     Change category to category_id in recipes table
-    Recipe belongs_to cateogry
+    Recipe belongs_to category
     Category has_many recipes
+    Add category to recipe show page
+
+[] Hidden field for owner_id
 
 [] Add recipe form (automatically assigns owner_id to current_user's id)
     Use drop down menu for ingredient quantity
@@ -80,3 +83,14 @@
     - Sort by number of saves?
 
 [] Style nav bar with bootstrap (see bookmarked link)
+
+
+    <% Category.all.each do |c| %>
+      <p>   
+        <label for="category_id_<%= c.id %>"><%= c.name %></label>
+        <input type="checkbox" name="recipe[category_id]" value="<%= c.id %>" id="category_id_<%= c.id %>">
+      </p>
+    <% end %>
+
+
+=> <ActionController::Parameters {"authenticity_token"=>"TmShQ/n8M2cwaHRAyEJrpwoqw6Yj/ReVFP+HJKb0YP8HLowEgPQaumOu6Cf0J3QMkvI0nMgAnA9AvPoKbOgh/w==", "recipe"=>{"owner_id"=>"1", "name"=>"Dinner Surprise #2", "category_id"=>"7", "ingredient_ids"=>["", "1"], "ingredients"=>{"name"=>"Eggplant"}}, "commit"=>"Create Recipe", "controller"=>"recipes", "action"=>"create"} permitted: false>
