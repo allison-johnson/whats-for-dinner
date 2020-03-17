@@ -1,0 +1,5 @@
+<%= form_tag ({controller: 'recipes', action: 'new', method: 'post'}) do %>
+  <label for="num_ingredients">How many ingredients does your recipe have? </label>
+  <input type="text" id="num_ingredients" name="num_ingredients"><br>
+  <input type=submit value='Create a Recipe'>
+<% end %>

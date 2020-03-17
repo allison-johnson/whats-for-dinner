@@ -5,10 +5,14 @@ class RecipesController < ApplicationController
   end #index
 
   def new
-    @recipe = Recipe.new 
-    @ingredients = Ingredient.all 
-    3.times do
-      @recipe.recipe_ingredients.build
+    if !params[:num_ingredients]
+      render :setup 
+    else
+      @recipe = Recipe.new 
+      @ingredients = Ingredient.all 
+      (params[:num_ingredients].to_i + 2).to_i.times do
+        @recipe.recipe_ingredients.build
+      end
     end
   end #index
 

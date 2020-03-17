@@ -68,6 +68,8 @@ params[:recipe][:recipe_ingredients][0] =
 
 [x] Downcase name of ingredient before it gets saved
 
+[] Add 'instructions' to new recipe form/create
+
 [] Can only access recipes/new if logged in
 
 [] Validations
