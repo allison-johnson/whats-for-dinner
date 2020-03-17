@@ -53,6 +53,11 @@
 
 [x] Link to recipes index on nav bar
 
+[] Can only access recipes/new if logged in
+
+[] New ingredient form (and link to it from home page)
+    [] Also link to new ingredient from new recipe? If so, would you be able to return to pre-populated new recipe upon submission of new ingredient?
+
 [] Home page 
 
 [] Recipe show page - include times saved
@@ -63,7 +68,9 @@
     Category has_many recipes
     Add category to recipe show page
 
-[] Hidden field for owner_id
+[x] Hidden field for owner_id
+
+[] 
 
 [] Add recipe form (automatically assigns owner_id to current_user's id)
     Use drop down menu for ingredient quantity
@@ -84,13 +91,30 @@
 
 [] Style nav bar with bootstrap (see bookmarked link)
 
+[] Figure out how to create ingredient/recipe_ingredients nested inside 'new recipe' form
+    Ideally, ingredients would be checkboxes WITH an option to enter your own ingredients as well
+    BUT I feel like Recipe should also accept_nested_attributes_for :ingredients
+        - The problem is that ingredients actually only has one attribute, the name!
 
-    <% Category.all.each do |c| %>
-      <p>   
-        <label for="category_id_<%= c.id %>"><%= c.name %></label>
-        <input type="checkbox" name="recipe[category_id]" value="<%= c.id %>" id="category_id_<%= c.id %>">
-      </p>
-    <% end %>
+        - What I really want is for Recipe to accept_nested_attributes_for :recipe_ingredients, which contains information about the ingredient and the quantity
+            - The problem is that upon creation of the ingredient, the recipe_id isn't known
+            - Also, it uses the ingredient_id, which is not what the user should be entering into the form...
 
+        - Maybe what I need is to adjust the recipe_ingredients table to include ingredient_name instead of ingredient_id 
 
-=> <ActionController::Parameters {"authenticity_token"=>"TmShQ/n8M2cwaHRAyEJrpwoqw6Yj/ReVFP+HJKb0YP8HLowEgPQaumOu6Cf0J3QMkvI0nMgAnA9AvPoKbOgh/w==", "recipe"=>{"owner_id"=>"1", "name"=>"Dinner Surprise #2", "category_id"=>"7", "ingredient_ids"=>["", "1"], "ingredients"=>{"name"=>"Eggplant"}}, "commit"=>"Create Recipe", "controller"=>"recipes", "action"=>"create"} permitted: false>
+            - ALSO! Use 'new ingredient' form instead of having user create new ingredients in the context of the 'new recipe' form
+
+Recipe:
+accepts_nested_attributes_for :ingredients
+accepts_nested_attributes_for :recipe_ingredients
+
+<%= f.fields_for :recipe_ingredients do |recipe_ingredient| %>
+  #Delete next 2 lines b/c recipe doesn't have an ID yet!
+  <%= recipe_ingredient.label :recipe_id %>
+  <%= recipe_ingredient.text_field :recipe_id %>
+
+  <%= recipe_ingredient.label "Ingredient Name: " %>
+  <%= recipe_ingredient.text_field :ingredient_id %>
+
+  <%= recipe_ingredient.label "Amount: " %>
+  <%= recipe_ingredient.text_field :quantity %>

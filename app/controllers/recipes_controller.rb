@@ -12,22 +12,33 @@ class RecipesController < ApplicationController
   end #index
 
   def create
-    #binding.pry 
+    binding.pry 
     @recipe = Recipe.new
     @recipe.owner_id = params[:recipe][:owner_id]
     @recipe.name = params[:recipe][:name]
     @recipe.category_id = params[:recipe][:category_id]
+    @recipe.save
 
-    #Create records in recipe_ingredients from existing ingredients
+    #Create a record in recipe_ingredients table for each ingredient selected
+    #Use the recipe_id that was just created upon save
     params[:recipe][:ingredient_ids].each do |id|
       if id.to_i > 0
-        RecipeIngredient.create(quantity: "1 cup", ingredient_id: id, recipe_id: @recipe.id)
-        @recipe.ingredients << Ingredient.find(id)
+        @recipe.recipe_ingredients << RecipeIngredient.create(quantity: "1 cup", ingredient_id: id)
       end
     end
 
     @recipe.save 
-    binding.pry 
+    
+    #Create records in recipe_ingredients from existing ingredients
+    # params[:recipe][:ingredient_ids].each do |id|
+    #   if id.to_i > 0
+    #     RecipeIngredient.create(quantity: "1 cup", ingredient_id: id, recipe_id: @recipe.id)
+    #     @recipe.ingredients << Ingredient.find(id)
+    #   end
+    # end
+
+    # @recipe.save 
+    # binding.pry 
     #Create records in recipe_ingredients from new ingredients 
     #params[:recipe][:ingredients].each 
 
@@ -51,7 +62,7 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:owner_id, :name, :category_id, :instructions)
+    params.require(:recipe).permit(:owner_id, :name, :category_id, :instructions, :recipe_ingredients_ids => [], :recipe_ingredients_attributes => [:ingredient_id])
   end
 
 end #class 
