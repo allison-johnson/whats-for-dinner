@@ -64,7 +64,7 @@ params[:recipe][:recipe_ingredients][0] =
 
 [x] Add ingredient quantity to new recipe form and recipes#create
 
-[] Pre-new recipe form to ask user about how many ingredients they have
+[x] Pre-new recipe form to ask user about how many ingredients they have
 
 [x] Downcase name of ingredient before it gets saved
 
@@ -73,6 +73,8 @@ params[:recipe][:recipe_ingredients][0] =
 [] Can only access recipes/new if logged in
 
 [] Validations
+
+[] Comment RecipeIngredient class ... what is the purpose of that helper method?
 
 [] Home page 
 
@@ -86,7 +88,6 @@ params[:recipe][:recipe_ingredients][0] =
 
 [x] Hidden field for owner_id
 
-[] 
 
 [] Add recipe form (automatically assigns owner_id to current_user's id)
     Use drop down menu for ingredient quantity
@@ -103,6 +104,7 @@ params[:recipe][:recipe_ingredients][0] =
 
 [] Add filters to index page
     - By primary ingredient
+    - By owner
     - Sort by number of saves?
 
 [] Style nav bar with bootstrap (see bookmarked link)

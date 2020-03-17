@@ -5,15 +5,20 @@ class RecipesController < ApplicationController
   end #index
 
   def new
-    if !params[:num_ingredients]
+    if params[:num_ingredients].nil? || params[:num_steps].nil? 
       render :setup 
     else
-      @recipe = Recipe.new 
-      @ingredients = Ingredient.all 
-      (params[:num_ingredients].to_i + 2).to_i.times do
-        @recipe.recipe_ingredients.build
+      if params[:num_ingredients].empty? || params[:num_steps].empty?
+        flash[:message] = "Please fill in all required fields."
+        render :setup
+      else
+        @recipe = Recipe.new 
+        @ingredients = Ingredient.all 
+        (params[:num_ingredients].to_i + 2).to_i.times do
+          @recipe.recipe_ingredients.build
+        end #do
       end
-    end
+    end #outer if/else
   end #index
 
   def create
