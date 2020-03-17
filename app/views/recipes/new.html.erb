@@ -1,36 +1,24 @@
-<%= form_for @recipe do |f| %>
-  <%= f.hidden_field :owner_id, value: current_user.id %>
+<%= form_for @recipe do |recipe_form| %>
+  <%= recipe_form.hidden_field :owner_id, value: current_user.id %>
   <p>
-    <%= f.label "Name: " %>
-    <%= f.text_field :name %>
+    <%= recipe_form.label "Name: " %>
+    <%= recipe_form.text_field :name %>
   </p>
 
   <p>
-    <%= f.label "Recipe Category: " %>
-    <%= f.collection_select :category_id, Category.all, :id, :name %>
+    <%= recipe_form.label "Recipe Category: " %>
+    <%= recipe_form.collection_select :category_id, Category.all, :id, :name %>
   </p>
 
   <h3>Ingredients</h3>
-  <%= f.collection_check_boxes(:ingredient_ids, Ingredient.all, :id, :name) do |b| %>
-  <p>
-    <%= b.check_box %>
-    <%= b.label %>
-  </p>
+  <%= recipe_form.fields_for :recipe_ingredients, @recipe.recipe_ingredients do |ri_builder| %>
+    <%= ri_builder.label "Enter Ingredient Name: " %>
+    <%= ri_builder.text_field :ingredient_name %>
+    <%= ri_builder.label "Enter Quantity: " %>
+    <%= ri_builder.text_field :quantity %><br>
   <% end %>
 
-<!--
-  <%= f.fields_for :ingredients do |ingredient_builder| %>
-    <%= ingredient_builder.label "Enter Ingredient: " %>
-    <%= ingredient_builder.text_field :name_1 %>
-    <%= ingredient_builder.label "Enter Quantity: " %>
-    <%= ingredient_builder.text_field :quantity_1 %><br>
-
-    <%= ingredient_builder.text_field :name_2 %><br>
-    <%= ingredient_builder.text_field :name_3 %><br>
-  <% end %>
-  -->
-
   <p>
-    <%= f.submit %>
+    <%= recipe_form.submit %>
   </p>
 <% end %>

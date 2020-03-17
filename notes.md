@@ -1,3 +1,10 @@
+params[:recipe][:recipe_ingredients][0] =
+
+{
+    :ingredient_id => 3
+    :quantity => "1 cup"
+}
+
 [x] User has a name, email, and password. Adjust on sign up and login pages.
 [x] Set up Recipe model and migration
 [x] Set up SavedRecipes model and migration
@@ -53,10 +60,17 @@
 
 [x] Link to recipes index on nav bar
 
+[x] recipes#create also creates recipe_ingredient records 
+
+[x] Add ingredient quantity to new recipe form and recipes#create
+
+[] Pre-new recipe form to ask user about how many ingredients they have
+
+[x] Downcase name of ingredient before it gets saved
+
 [] Can only access recipes/new if logged in
 
-[] New ingredient form (and link to it from home page)
-    [] Also link to new ingredient from new recipe? If so, would you be able to return to pre-populated new recipe upon submission of new ingredient?
+[] Validations
 
 [] Home page 
 
@@ -104,17 +118,12 @@
 
             - ALSO! Use 'new ingredient' form instead of having user create new ingredients in the context of the 'new recipe' form
 
-Recipe:
-accepts_nested_attributes_for :ingredients
-accepts_nested_attributes_for :recipe_ingredients
 
-<%= f.fields_for :recipe_ingredients do |recipe_ingredient| %>
-  #Delete next 2 lines b/c recipe doesn't have an ID yet!
-  <%= recipe_ingredient.label :recipe_id %>
-  <%= recipe_ingredient.text_field :recipe_id %>
 
-  <%= recipe_ingredient.label "Ingredient Name: " %>
-  <%= recipe_ingredient.text_field :ingredient_id %>
-
-  <%= recipe_ingredient.label "Amount: " %>
-  <%= recipe_ingredient.text_field :quantity %>
+Checkboxes for Existing Ingredients
+  <%= recipe_form.collection_check_boxes(:ingredient_ids, @ingredients, :id, :name) do |b| %>
+  <p>
+    <%= b.check_box %>
+    <%= b.label %>
+  </p>
+  <% end %>
