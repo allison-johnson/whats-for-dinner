@@ -19,6 +19,9 @@
   <% end %>
 
   <h3>Instructions</h3>
+  <% @num_steps.times do |i| %>
+    <input type="text" name=<%="step_#{i}"%> ><br><br>
+  <% end %>
 
   <p>
     <%= recipe_form.submit %>

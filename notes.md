@@ -69,6 +69,10 @@ params[:recipe][:recipe_ingredients][0] =
 [x] Downcase name of ingredient before it gets saved
 
 [] Add 'instructions' to new recipe form/create
+    Have @num_steps instance variable
+    Generate that many input fields in form using html
+    Give each one a name using html
+    In recipes#create, manually add params[:instructions][#] to @recipe.instructions 
 
 [] Can only access recipes/new if logged in
 

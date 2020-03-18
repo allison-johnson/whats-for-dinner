@@ -14,6 +14,7 @@ class RecipesController < ApplicationController
       else
         @recipe = Recipe.new 
         @ingredients = Ingredient.all 
+        @num_steps = params[:num_steps].to_i + 2
         (params[:num_ingredients].to_i + 2).to_i.times do
           @recipe.recipe_ingredients.build
         end #do
@@ -22,6 +23,7 @@ class RecipesController < ApplicationController
   end #index
 
   def create
+    binding.pry
     @recipe = Recipe.new(recipe_params)
 
     if @recipe.save
