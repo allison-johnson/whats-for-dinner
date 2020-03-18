@@ -9,7 +9,7 @@ class RecipesController < ApplicationController
     #binding.pry 
     if is_integer_greater_than_zero(params[:num_ingredients].to_i) && is_integer_greater_than_zero(params[:num_steps].to_i)
       @recipe = Recipe.new 
-      @ingredients = Ingredient.all 
+      #@ingredients = Ingredient.all 
       @num_steps = params[:num_steps].to_i + 2
       @num_ingredients = params[:num_ingredients].to_i + 2
       @num_ingredients.times do
@@ -31,7 +31,7 @@ class RecipesController < ApplicationController
       end
       redirect_to recipe_path(@recipe)
     else
-      binding.pry 
+      #binding.pry 
       @num_steps = @recipe.num_steps 
       @num_ingredients = @recipe.num_ingredients 
       (@num_ingredients - @recipe.recipe_ingredients.size).times do

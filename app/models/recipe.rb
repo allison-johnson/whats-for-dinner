@@ -11,6 +11,8 @@ class Recipe < ApplicationRecord
     has_many :recipe_ingredients
     has_many :ingredients, through: :recipe_ingredients 
 
+    has_many :recipe_steps 
+
     validates :owner_id, :name, :category_id, presence: true 
     validates :num_steps, numericality: {only_integer: true, greater_than: 0} 
 
