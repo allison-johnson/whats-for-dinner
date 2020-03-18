@@ -23,10 +23,14 @@ class RecipesController < ApplicationController
   end #index
 
   def create
-    binding.pry
+    #binding.pry
     @recipe = Recipe.new(recipe_params)
 
     if @recipe.save
+      @recipe.num_steps.times do |i|
+        @recipe.instructions << params[:"step_#{i}"] if !params[:"step_#{i}"].empty?
+        @recipe.save 
+      end
       redirect_to recipe_path(@recipe)
     else
       render :new 
@@ -48,7 +52,7 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:owner_id, :name, :category_id, :instructions, :recipe_ingredients_ids => [], :recipe_ingredients_attributes => [:ingredient_name, :quantity])
+    params.require(:recipe).permit(:owner_id, :name, :category_id, :num_steps, :instructions, :recipe_ingredients_ids => [], :recipe_ingredients_attributes => [:ingredient_name, :quantity])
   end
 
 end #class 

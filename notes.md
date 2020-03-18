@@ -74,6 +74,8 @@ params[:recipe][:recipe_ingredients][0] =
     Give each one a name using html
     In recipes#create, manually add params[:instructions][#] to @recipe.instructions 
 
+[] Add more categories. Ability to also create a new one?
+
 [] Can only access recipes/new if logged in
 
 [] Validations

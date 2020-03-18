@@ -1,5 +1,6 @@
 <%= form_for @recipe do |recipe_form| %>
   <%= recipe_form.hidden_field :owner_id, value: current_user.id %>
+  <%= recipe_form.hidden_field :num_steps, value: @num_steps %>
   <p>
     <%= recipe_form.label "Name: " %>
     <%= recipe_form.text_field :name %>
