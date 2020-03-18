@@ -1,6 +1,10 @@
-<% if flash[:message] %>
-  <%= flash[:message] %>
-<% end %>
+<div id="error_explanation">
+  <ul>
+  <% if flash[:message] %>
+    <li><%= flash[:message] %></li> 
+  <% end %>
+  </ul>
+</div>
 
 <%= form_tag ({controller: 'recipes', action: 'new', method: 'post'}) do %>
   <label for="num_ingredients">How many ingredients does your recipe have? </label>

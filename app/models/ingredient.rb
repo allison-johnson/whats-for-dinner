@@ -4,6 +4,9 @@ class Ingredient < ApplicationRecord
 
   before_validation :make_lower
 
+  validates :name, presence: true
+  validates :name, uniqueness: true 
+
   def make_lower
     self.name = self.name.downcase 
   end

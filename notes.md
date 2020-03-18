@@ -1,84 +1,29 @@
-params[:recipe][:recipe_ingredients][0] =
+[x] Add 'instructions' to new recipe form/create
 
-{
-    :ingredient_id => 3
-    :quantity => "1 cup"
-}
+    [] Better way do this using, say, a params[:instructions] array and then adding all elements of that array to @recipe.instructions in recipe#create?
 
-[x] User has a name, email, and password. Adjust on sign up and login pages.
-[x] Set up Recipe model and migration
-[x] Set up SavedRecipes model and migration
-[x] Add ownership to recipes (see Sinatra project), owner_id column to recipes table
-[x] Set up Comment model and migration
-
-[x] Set up associations: 
-    user_recipe belongs_to user
-    user_recipe belongs_to recipe
-
-    user has_many owned_recipes
-    user has_many user_recipes
-    user has_many recipes through user_recipes
-    user has_many comments
-
-    recipe belongs_to owner
-    recipe has_many user_recipes
-    recipe has_many users through user_recipes
-    recipe has_many comments 
-
-    comment belongs_to user
-    comment belongs_to recipe
-
-[x] Ingredient as a model class? 
-    ingredients table has name column
-
-[x] recipe_ingredients table that has:
-    recipe_id
-    ingredient_id
-    quantity (will be a drop-down)
-
-[x] Recipe-Ingredient Associations
-    recipe_ingredient belongs_to recipe
-    recipe_ingredient belongs_to ingredient
-
-    recipe has_many recipe_ingredients
-    recipe has_many ingredients through recipe_ingredients
-
-    ingredient has_many recipe_ingredients
-    ingredient has_many recipes through recipe_ingredients
-
-[x] Test out serialize :instructions in console
-    serialize :instructions, Array 
-
-[x] Sign up form
-[x] Login form
-
-[x] Recipes index page
-
-[x] Recipe show page 
-    Owner
-    All recipe information
-
-[x] Link to recipes index on nav bar
-
-[x] recipes#create also creates recipe_ingredient records 
-
-[x] Add ingredient quantity to new recipe form and recipes#create
-
-[x] Pre-new recipe form to ask user about how many ingredients they have
-
-[x] Downcase name of ingredient before it gets saved
-
-[] Add 'instructions' to new recipe form/create
-    Have @num_steps instance variable
-    Generate that many input fields in form using html
-    Give each one a name using html
-    In recipes#create, manually add params[:instructions][#] to @recipe.instructions 
+        If recipe is not valid and form is re-rendered, instructions don't auto-populate?
 
 [] Add more categories. Ability to also create a new one?
 
-[] Can only access recipes/new if logged in
+[x] Can only access recipes/new if logged in
 
 [] Validations
+    [x] Recipe
+    [] Ingredient
+        - When name is blank, how do I get the error message for ingredients to appear in the errors section of the new recipe form? 
+    [x] num_steps must be a number
+    [] Recipe - instructions
+
+[] Error messages if new recipe reloads - including error on ingredient
+
+[] Homepage: 
+    [] "Welcome Alan!"
+    [] Link on nav bar to create new recipe
+
+[] Link to 'save recipe' on show page
+
+[] Edit/update recipe (if owner)
 
 [] Comment RecipeIngredient class ... what is the purpose of that helper method?
 
@@ -92,13 +37,12 @@ params[:recipe][:recipe_ingredients][0] =
     Category has_many recipes
     Add category to recipe show page
 
-[x] Hidden field for owner_id
+[] Add filters to index page
+    - By primary ingredient
+    - By owner
+    - Sort by number of saves?
 
-
-[] Add recipe form (automatically assigns owner_id to current_user's id)
-    Use drop down menu for ingredient quantity
-    Can select ingredient name or create new one
-    Automatically associate ingredient to recipe
+[] Omniauth for 3rd party login
 
 [] Comment form on recipe show page
 
@@ -107,11 +51,6 @@ params[:recipe][:recipe_ingredients][0] =
 [] If user is logged in, they can save the recipe to their box
 
 [] User can view recipe box (all saved recipes)
-
-[] Add filters to index page
-    - By primary ingredient
-    - By owner
-    - Sort by number of saves?
 
 [] Style nav bar with bootstrap (see bookmarked link)
 

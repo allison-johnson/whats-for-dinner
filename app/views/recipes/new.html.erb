@@ -1,6 +1,17 @@
+<% if @recipe.errors.any? %>
+  <div id="error_explanation">
+    <ul>
+      <% @recipe.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li> 
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_for @recipe do |recipe_form| %>
   <%= recipe_form.hidden_field :owner_id, value: current_user.id %>
   <%= recipe_form.hidden_field :num_steps, value: @num_steps %>
+  <%= recipe_form.hidden_field :num_ingredients, value: @num_ingredients %>
   <p>
     <%= recipe_form.label "Name: " %>
     <%= recipe_form.text_field :name %>
