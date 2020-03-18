@@ -10,11 +10,17 @@ class RecipesController < ApplicationController
     if is_integer_greater_than_zero(params[:num_ingredients].to_i) && is_integer_greater_than_zero(params[:num_steps].to_i)
       @recipe = Recipe.new 
       #@ingredients = Ingredient.all 
-      @num_steps = params[:num_steps].to_i + 2
+      
       @num_ingredients = params[:num_ingredients].to_i + 2
       @num_ingredients.times do
         @recipe.recipe_ingredients.build
       end #do
+
+      @num_steps = params[:num_steps].to_i + 2
+      @num_steps.times do
+        @recipe.recipe_steps.build 
+      end #do
+      
     else
       flash[:message] = "Please fill in both fields with a whole number greater than 0."
       render :setup
@@ -23,16 +29,17 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = Recipe.new(recipe_params)
-    
+    #binding.pry
+
     if @recipe.save
-      @recipe.num_steps.times do |i|
-        @recipe.instructions << params[:"step_#{i}"] if !params[:"step_#{i}"].empty?
-        @recipe.save 
-      end
       redirect_to recipe_path(@recipe)
     else
       #binding.pry 
       @num_steps = @recipe.num_steps 
+      (@num_steps - @recipe.recipe_steps.size).times do 
+        @recipe.recipe_steps.build 
+      end #do
+
       @num_ingredients = @recipe.num_ingredients 
       (@num_ingredients - @recipe.recipe_ingredients.size).times do
         @recipe.recipe_ingredients.build
@@ -46,7 +53,7 @@ class RecipesController < ApplicationController
     @owner = @recipe.owner
     @category = Category.find_by(id: @recipe.category_id)
     @ingredients = @recipe.recipe_ingredients 
-    @instructions = @recipe.instructions 
+    @steps = @recipe.recipe_steps
   end
 
   private
@@ -56,7 +63,7 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:owner_id, :name, :category_id, :num_steps, :num_ingredients, :instructions, :recipe_ingredients_ids => [], :recipe_ingredients_attributes => [:ingredient_name, :quantity])
+    params.require(:recipe).permit(:owner_id, :name, :category_id, :num_steps, :num_ingredients, :instructions, :recipe_ingredients_ids => [], :recipe_ingredients_attributes => [:ingredient_name, :quantity], :recipe_step_ids => [], :recipe_steps_attributes => [:content, :step_number])
   end
 
   def require_login

@@ -27,4 +27,14 @@ class Recipe < ApplicationRecord
         self.save 
     end
 
+    def recipe_steps_attributes=(rs_hash)
+        rs_hash.each do |index, rs_info|
+            if rs_info[:content] != ""
+                recipe_step = RecipeStep.create(content: rs_info[:content], recipe_id: self.id, step_number: index.to_i + 1)
+                self.recipe_steps << recipe_step
+            end
+        end
+        self.save 
+    end
+
 end

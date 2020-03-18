@@ -11,7 +11,7 @@
 
 <h3>Steps</h3>
 <ol>
-  <% @instructions.each do |step| %>
-    <li><%= step %></li> 
+  <% @steps.each do |step| %>
+    <li><%= "#{step.content}" %></li> 
   <% end %>
 </ol>

@@ -31,9 +31,13 @@
   <% end %>
 
   <h3>Instructions</h3>
-  <% @num_steps.times do |i| %>
-    <input type="text" name=<%="step_#{i}"%> ><br><br>
+  <%= recipe_form.fields_for :recipe_steps, @recipe.recipe_steps do |rs_builder| %>
+    <%= rs_builder.hidden_field :step_number, value: 3 %>
+    <%= rs_builder.label "Instruction: " %>
+    <%= rs_builder.text_field :content %>
+    <br><br>
   <% end %>
+
 
   <p>
     <%= recipe_form.submit %>

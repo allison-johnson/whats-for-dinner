@@ -17,6 +17,10 @@
 
 [] Error messages if new recipe reloads - including error on ingredient
 
+[] Do I need these in my whitelisted params since I'm not using checkboxes anymore?
+    :recipe_ingredients_ids
+    :recipe_steps_ids
+
 [] Homepage: 
     [] "Welcome Alan!"
     [] Link on nav bar to create new recipe
@@ -75,4 +79,8 @@ Checkboxes for Existing Ingredients
     <%= b.check_box %>
     <%= b.label %>
   </p>
+  <% end %>
+
+  <% @num_steps.times do |i| %>
+    <input type="text" name=<%="step_#{i}"%> ><br><br>
   <% end %>
