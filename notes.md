@@ -24,6 +24,7 @@
     [] What else should be on home page?
 
 [x] Link to 'save recipe' on show page
+    [] Only appears if user is logged in AND doesn't already have recipe in their box
 
 [] Edit/update recipe (if owner)
 
@@ -55,7 +56,7 @@
 
 [] If user is logged in, they can save the recipe to their box
 
-[] User can view recipe box (all saved recipes)
+[x] User can view recipe box (all saved recipes)
 
 [] Style nav bar with bootstrap (see bookmarked link)
 

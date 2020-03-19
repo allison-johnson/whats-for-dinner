@@ -1,6 +1,10 @@
 <h2><%= @recipe.name %></h2>
 <h4><%= "Submitted by: #{@owner.first_name} #{@owner.last_name}" %></h4>
 <h4><%= "Category: #{@category.name}" %>
+<h4><%= "Saved #{@recipe.num_saves} times" %></h4>
+<% if current_user.saved_recipes.include?(@recipe) %>
+  Saved to your Recipe Box
+<% end %>
 
 <h3>Ingredients</h3>
 <ul>
@@ -16,10 +20,12 @@
   <% end %>
 </ol>
 
-<% if user_signed_in? %>
+<% if user_signed_in? && !current_user.saved_recipes.include?(@recipe) %>
   <%= form_tag user_recipes_path do %>
     <%= hidden_field_tag("recipe_id", @recipe.id) %>
     <%= hidden_field_tag("user_id", current_user.id) %>
     <%= submit_tag "Save to my Recipe Box" %>
   <% end %>
 <% end %>
+
+
