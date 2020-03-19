@@ -15,6 +15,7 @@
     <h2>Hi, <%= user_signed_in? ? current_user.email.upcase : "Guest" %>!</h2>
     <div class="nav">
       <% if user_signed_in? %>
+        <%= link_to "Your Saved Recipes", user_recipes_path %>
         <%= link_to "Recipe Index", recipes_path %>
         <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
         <%= link_to "Create a Recipe", recipes_new_path %>

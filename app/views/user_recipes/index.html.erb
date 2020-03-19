@@ -1,5 +1,7 @@
+<h3>Your Saved Recipes</h3>
+
 <% @recipes_in_box.each do |saved_recipe| %>
   <ul>
-    <li><%= saved_recipe.recipe_name %></li>
+    <li><%= link_to saved_recipe.recipe_name, recipe_path(saved_recipe.recipe_id) %></li>
   </ul>
 <% end %>
