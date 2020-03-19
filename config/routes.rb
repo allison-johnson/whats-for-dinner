@@ -14,4 +14,7 @@ Rails.application.routes.draw do
   
   patch '/recipes/:id', to: 'recipes#update'
 
+  #Check this, then add "remove from recipe box" button to show page
+  delete '/user_recipes', to: 'user_recipes#destroy', as: 'user_recipes_destroy'
+
 end 

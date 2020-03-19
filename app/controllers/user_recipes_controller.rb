@@ -7,9 +7,17 @@ class UserRecipesController < ApplicationController
     end
     
     def create
-      UserRecipe.create(user_id: params[:user_id], recipe_id: params[:recipe_id])
+      if !current_user.saved_recipes.include?(Recipe.find_by(id: params[:recipe_id]))
+        UserRecipe.create(user_id: params[:user_id], recipe_id: params[:recipe_id])
+      end
       redirect_to user_recipes_path
     end #create
+
+    def destroy
+      binding.pry 
+      UserRecipe.find_by(user_id: params[:user_id], recipe_id: params[:recipe_id]).destroy
+      redirect_to user_recipes_path 
+    end #destroy
 
     private
 
