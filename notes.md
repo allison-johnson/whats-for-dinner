@@ -21,16 +21,13 @@
 [] Homepage: 
     [] "Welcome Alan!"
     [x] Link on nav bar to create new recipe
+    [] What else should be on home page?
 
-[] Link to 'save recipe' on show page
+[x] Link to 'save recipe' on show page
 
 [] Edit/update recipe (if owner)
 
-
-
 [] Comment RecipeIngredient class ... what is the purpose of that helper method?
-
-[] Home page 
 
 [] Recipe show page - include times saved
 
@@ -46,6 +43,11 @@
     - Sort by number of saves?
 
 [] Omniauth for 3rd party login
+
+[] Organize Recipe Index page
+    - Use a table
+    - Organize by category
+    - Within category, sort by number of saves
 
 [] Comment form on recipe show page
 

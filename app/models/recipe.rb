@@ -37,4 +37,8 @@ class Recipe < ApplicationRecord
         self.save 
     end
 
+    def num_saves
+      UserRecipe.where("recipe_id = ?", self.id).count 
+    end
+
 end
