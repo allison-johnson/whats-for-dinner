@@ -2,7 +2,17 @@ class RecipesController < ApplicationController
   before_action :require_login, only: [:new, :create, :edit]
 
   def index
-    @recipes = Recipe.all
+    if params[:user_id]
+      user = User.find_by(id: params[:user_id])
+      if user.nil?
+        flash[:alert] = "User not found!"
+        redirect_to root_path
+      else
+        @recipes = user.owned_recipes 
+      end
+    else
+      @recipes = Recipe.all
+    end
   end #index
 
   def new
