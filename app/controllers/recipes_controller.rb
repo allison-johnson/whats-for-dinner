@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  before_action :require_login, only: [:new, :create]
+  before_action :require_login, only: [:new, :create, :edit]
 
   def index
     @recipes = Recipe.all
@@ -54,7 +54,66 @@ class RecipesController < ApplicationController
     @category = Category.find_by(id: @recipe.category_id)
     @ingredients = @recipe.recipe_ingredients 
     @steps = @recipe.recipe_steps
-  end
+  end #show
+
+  def edit
+    set_recipe 
+
+    if @recipe.owner_id == current_user.id 
+
+      @num_steps = @recipe.num_steps 
+      (@num_steps - @recipe.recipe_steps.size).times do 
+        @recipe.recipe_steps.build 
+      end #do
+
+      @num_ingredients = @recipe.num_ingredients 
+      (@num_ingredients - @recipe.recipe_ingredients.size).times do
+        @recipe.recipe_ingredients.build
+      end #do
+
+    else
+      render 'home/index'
+    end
+
+  end #edit
+
+  def update
+    set_recipe 
+    @recipe.recipe_ingredients.clear
+    @recipe.recipe_steps.clear
+    @recipe.save
+
+    if @recipe.update_attributes(recipe_params)
+      redirect_to recipe_path(@recipe) 
+    else
+      @num_steps = @recipe.num_steps 
+      (@num_steps - @recipe.recipe_steps.size).times do 
+        @recipe.recipe_steps.build 
+      end #do
+
+      @num_ingredients = @recipe.num_ingredients 
+      (@num_ingredients - @recipe.recipe_ingredients.size).times do
+        @recipe.recipe_ingredients.build
+      end #do
+      render ':edit'
+    end #if
+  end #update
+
+  def destroy
+    set_recipe
+
+    # It feels like when a recipe gets destroyed, the records in the join
+    # table that include that recipe should automatically get destroyed as well...
+    # But I don't think that happens, so I'll destroy them first
+
+    UserRecipe.where("recipe_id = ?", @recipe.id).each do |ur_record|
+      ur_record.destroy
+    end
+
+    @recipe.destroy
+
+    redirect_to root_path 
+  end #destroy 
 
   private
 

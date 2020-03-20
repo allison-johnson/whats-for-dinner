@@ -1,0 +1,46 @@
+<h3>Edit Recipe</h3>
+<% if @recipe.errors.any? %>
+  <div id="error_explanation">
+    <ul>
+      <% @recipe.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li> 
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @recipe do |recipe_form| %>
+  <%= recipe_form.hidden_field :owner_id, value: current_user.id %>
+  <%= recipe_form.hidden_field :num_steps, value: @num_steps %>
+  <%= recipe_form.hidden_field :num_ingredients, value: @num_ingredients %>
+  <p>
+    <%= recipe_form.label "Name: " %>
+    <%= recipe_form.text_field :name %>
+  </p>
+
+  <p>
+    <%= recipe_form.label "Recipe Category: " %>
+    <%= recipe_form.collection_select :category_id, Category.all, :id, :name %>
+  </p>
+
+  <h3>Ingredients</h3>
+  <%= recipe_form.fields_for :recipe_ingredients, @recipe.recipe_ingredients do |ri_builder| %>
+    <%= ri_builder.label "Enter Ingredient Name: " %>
+    <%= ri_builder.text_field :ingredient_name %>
+    <%= ri_builder.label "Enter Quantity: " %>
+    <%= ri_builder.text_field :quantity %><br><br>
+  <% end %>
+
+  <h3>Instructions</h3>
+  <%= recipe_form.fields_for :recipe_steps, @recipe.recipe_steps do |rs_builder| %>
+    <%= rs_builder.hidden_field :step_number, value: 3 %>
+    <%= rs_builder.label "Instruction: " %>
+    <%= rs_builder.text_field :content %>
+    <br><br>
+  <% end %>
+
+
+  <p>
+    <%= recipe_form.submit %>
+  </p>
+<% end %>

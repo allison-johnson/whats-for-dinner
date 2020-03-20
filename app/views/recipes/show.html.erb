@@ -35,5 +35,19 @@
     <%= submit_tag "Delete from my Recipe Box" %>
   <% end %>
 <% end %>
+<br>
+
+<% if current_user.id == @recipe.owner_id %>
+  <%= form_tag recipe_edit_path(@recipe), method: "get" do %>
+    <%= submit_tag "Edit Recipe" %>
+  <% end %>
+<% end %>
+<br>
+
+<% if current_user.id == @recipe.owner_id %>
+  <%= form_tag recipes_destroy_path, method: "delete" do %>
+    <%= submit_tag "Delete Recipe" %>
+  <% end %>
+<% end %>
 
 

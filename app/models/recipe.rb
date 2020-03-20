@@ -18,9 +18,10 @@ class Recipe < ApplicationRecord
 
     def recipe_ingredients_attributes=(ri_hash)
         ri_hash.each do |index, ri_info|
-            if ri_info[:ingredient_name] != ""
+            if !ri_info[:ingredient_name].empty?
               ingredient = Ingredient.find_or_create_by(name: ri_info[:ingredient_name].downcase)
               r = RecipeIngredient.create(quantity: ri_info[:quantity], recipe_id: self.id, ingredient_id: ingredient.id)
+              #binding.pry 
               self.recipe_ingredients << r 
             end
         end

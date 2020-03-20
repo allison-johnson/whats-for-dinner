@@ -14,7 +14,6 @@ class UserRecipesController < ApplicationController
     end #create
 
     def destroy
-      binding.pry 
       UserRecipe.find_by(user_id: params[:user_id], recipe_id: params[:recipe_id]).destroy
       redirect_to user_recipes_path 
     end #destroy
