@@ -2,7 +2,7 @@
 <h4><%= "Submitted by: #{@owner.first_name} #{@owner.last_name}" %></h4>
 <h4><%= "Category: #{@category.name}" %>
 <h4><%= "Saved #{@recipe.num_saves} times" %></h4>
-<% if current_user.saved_recipes.include?(@recipe) %>
+<% if current_user && current_user.saved_recipes.include?(@recipe) %>
   Saved to your Recipe Box
 <% end %>
 
@@ -20,33 +20,35 @@
   <% end %>
 </ol>
 
-<% if user_signed_in? && !current_user.saved_recipes.include?(@recipe) %>
-  <%= form_tag saved_recipes_path do %>
-    <%= hidden_field_tag("recipe_id", @recipe.id) %>
-    <%= hidden_field_tag("user_id", current_user.id) %>
-    <%= submit_tag "Save to my Recipe Box" %>
+<% if user_signed_in? %>
+  <% if !current_user.saved_recipes.include?(@recipe) %>
+    <%= form_tag saved_recipes_path do %>
+      <%= hidden_field_tag("recipe_id", @recipe.id) %>
+      <%= hidden_field_tag("user_id", current_user.id) %>
+      <%= submit_tag "Save to my Recipe Box" %>
+    <% end %>
   <% end %>
-<% end %>
 
-<% if current_user.saved_recipes.include?(@recipe) %>
-  <%= form_tag user_recipes_destroy_path, method: "delete" do %>
-    <%= hidden_field_tag("recipe_id", @recipe.id) %>
-    <%= hidden_field_tag("user_id", current_user.id) %>
-    <%= submit_tag "Delete from my Recipe Box" %>
+  <% if current_user.saved_recipes.include?(@recipe) %>
+    <%= form_tag user_recipes_destroy_path, method: "delete" do %>
+      <%= hidden_field_tag("recipe_id", @recipe.id) %>
+      <%= hidden_field_tag("user_id", current_user.id) %>
+      <%= submit_tag "Delete from my Recipe Box" %>
+    <% end %>
   <% end %>
-<% end %>
-<br>
+  <br>
 
-<% if current_user.id == @recipe.owner_id %>
-  <%= form_tag recipe_edit_path(@recipe), method: "get" do %>
-    <%= submit_tag "Edit Recipe" %>
+  <% if current_user.id == @recipe.owner_id %>
+    <%= form_tag recipe_edit_path(@recipe), method: "get" do %>
+      <%= submit_tag "Edit Recipe" %>
+    <% end %>
   <% end %>
-<% end %>
-<br>
+  <br>
 
-<% if current_user.id == @recipe.owner_id %>
-  <%= form_tag recipes_destroy_path, method: "delete" do %>
-    <%= submit_tag "Delete Recipe" %>
+  <% if current_user.id == @recipe.owner_id %>
+    <%= form_tag recipes_destroy_path, method: "delete" do %>
+      <%= submit_tag "Delete Recipe" %>
+    <% end %>
   <% end %>
 <% end %>
 

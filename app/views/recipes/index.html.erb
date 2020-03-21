@@ -21,6 +21,10 @@
   <h2>Recipe Index</h2>
 <% end %>
 
+<% if flash[:has_category]
+  <h3><%= "All #{@category.name} Recipes" %></h3>
+<% end %>
+
 <ul>
 <% @recipes.each do |recipe| %>
   <li><%= link_to recipe.name, recipe_path(recipe) %></li>

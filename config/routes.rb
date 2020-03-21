@@ -1,11 +1,23 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => {registrations: 'registrations'}
+  devise_for :users, :controllers => {registrations: 'registrations', omniauth_callbacks: 'users/auth/google_oauth2/callback'}
+  # omniauth_callbacks: 'users/omniauth_callbacks'
 
   resources :users do
     resources :recipes, only: [:new, :index]
     #=> /users/:user_id/recipes -- user_recipes_path
     #=> /users/:user_id/recipes/new -- new_user_recipe_path
   end
+
+  resources :categories do
+    resources :recipes, only: [:new, :index]
+    #=> /categories/category_id/recipes
+    #=> /categories/category_name/recipes/new 
+  end
+
+  # /categories/chicken/recipes -> loads chicken recipes
+  # /recipes -> loads all recipes
+
+  # /categories/chicken/recipes/new -> creates new chicken recipe
 
   root to: 'home#index'
   

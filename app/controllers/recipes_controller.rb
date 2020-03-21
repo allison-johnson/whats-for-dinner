@@ -3,24 +3,35 @@ class RecipesController < ApplicationController
 
   def index
     flash[:has_user] = false
-    if params[:user_id] #index route nested under users
-      flash[:has_user] = true 
-      @user = User.find_by(id: params[:user_id])
-      if @user.nil?
-        flash[:alert] = "User not found!"
-        redirect_to root_path
-      else
-        @recipes = @user.owned_recipes 
-      end
-    else #non-nested index route
-      @recipes = Recipe.all
-      @categories = Category.all
-      @users = User.all
+    flash[:has_category] = false
+    
+    if params[:category_name]
+      flash[:has_category] = true
+      @category = Category.find_by_slug(params[:category_name])
+      @categories = Category.all 
+      @recipes = Recipe.all.where("category_id = ?", @category.id)
 
-      if !params[:category].blank?
-        @recipes = @recipes.by_category(params[:category].to_i)
-      end
+    else
+    #Turn all of this into the else
+      if params[:user_id] #index route nested under users
+        flash[:has_user] = true 
+        @user = User.find_by(id: params[:user_id])
+        if @user.nil?
+          flash[:alert] = "User not found!"
+          redirect_to root_path
+        else
+          @recipes = @user.owned_recipes 
+          @categories = Category.all
+        end
+      else #non-nested index route
+        @recipes = Recipe.all
+        @categories = Category.all
 
+        if !params[:category].blank?
+          @recipes = @recipes.by_category(params[:category].to_i)
+        end
+
+      end
     end
   end #index
 
@@ -30,7 +41,7 @@ class RecipesController < ApplicationController
       if current_user.id == params[:user_id].to_i
         get_new_recipe
       else
-        flash[:alert] = "Not authorized!"
+        flash[:alert] = "Not authorized to create a recipe for this user!"
         redirect_to root_path 
       end
     else
