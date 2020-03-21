@@ -4,10 +4,11 @@ class RecipesController < ApplicationController
   def index
     flash[:has_user] = false
     flash[:has_category] = false
-    
-    if params[:category_name]
+
+    if params[:category_id]
       flash[:has_category] = true
-      @category = Category.find_by_slug(params[:category_name])
+      @category = Category.find(params[:category_id])
+      #Account for case where category does not exist
       @categories = Category.all 
       @recipes = Recipe.all.where("category_id = ?", @category.id)
 
