@@ -20,12 +20,12 @@ class User < ApplicationRecord
     data = access_token.info
     user = User.find_by(email: data['email'])
 
-    unless user 
-      user = User.create( 
-        email: data['email'],
-        password: Devise.friendly_token[0,20]
-      )
-    end
+    # unless user 
+    #   user = User.create( 
+    #     email: data['email'],
+    #     password: Devise.friendly_token[0,20]
+    #   )
+    # end
     user 
   end #self.from_ommniauth
 

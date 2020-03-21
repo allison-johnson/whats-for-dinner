@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => {registrations: 'registrations', omniauth_callbacks: 'users/auth/google_oauth2/callback'}
+  devise_for :users, :controllers => {registrations: 'registrations', omniauth_callbacks: 'users/omniauth_callbacks'}
   # omniauth_callbacks: 'users/omniauth_callbacks'
+  # 'users/auth/google_oauth2/callback'
 
   resources :users do
     resources :recipes, only: [:new, :index]
@@ -13,6 +14,8 @@ Rails.application.routes.draw do
     #=> /categories/category_id/recipes
     #=> /categories/category_name/recipes/new 
   end
+
+  post '/categories/:category_id/recipes/new', to: 'recipes#new'
 
   # /categories/chicken/recipes -> loads chicken recipes
   # /recipes -> loads all recipes

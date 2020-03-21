@@ -19,7 +19,12 @@
 
   <p>
     <%= recipe_form.label "Recipe Category: " %>
-    <%= recipe_form.collection_select :category_id, Category.all, :id, :name %>
+    <% if flash[:has_category] %>
+      <%= @category.name %>
+      <%= recipe_form.hidden_field :category_id, value: @category_id %>
+    <% else %>
+      <%= recipe_form.collection_select :category_id, Category.all, :id, :name %>
+    <% end %>
   </p>
 
   <h3>Ingredients</h3>

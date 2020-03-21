@@ -37,17 +37,26 @@ class RecipesController < ApplicationController
   end #index
 
   def new
-    if params[:user_id]
-      #binding.pry 
-      if current_user.id == params[:user_id].to_i
-        get_new_recipe
-      else
-        flash[:alert] = "Not authorized to create a recipe for this user!"
-        redirect_to root_path 
-      end
+    flash[:has_category] = false
+
+    if params[:category_id]
+      flash[:has_category] = true
+      @category_id = params[:category_id].to_i 
+      get_new_recipe(@category_id) 
+
     else
-      get_new_recipe 
-    end
+      if params[:user_id]
+        #binding.pry 
+        if current_user.id == params[:user_id].to_i
+          get_new_recipe
+        else
+          flash[:alert] = "Not authorized to create a recipe for this user!"
+          redirect_to root_path 
+        end
+      else
+        get_new_recipe 
+      end
+    end 
   end #new
 
   def create
@@ -173,10 +182,16 @@ class RecipesController < ApplicationController
     arg > 0
   end
 
-  def get_new_recipe
+  def get_new_recipe(category_id = 0)
+    flash[:has_category] = false
+    @category_id = category_id.to_i  
     if is_integer_greater_than_zero(params[:num_ingredients].to_i) && is_integer_greater_than_zero(params[:num_steps].to_i)
       @recipe = Recipe.new 
-      #@ingredients = Ingredient.all 
+      
+      if @category_id > 0
+        flash[:has_category] = true
+        @category = Category.find_by(id: @category_id)
+      end
       
       @num_ingredients = params[:num_ingredients].to_i + 2
       @num_ingredients.times do

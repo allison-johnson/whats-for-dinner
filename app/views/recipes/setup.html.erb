@@ -6,10 +6,24 @@
   </ul>
 </div>
 
-<%= form_tag ({controller: 'recipes', action: 'new', method: 'post'}) do %>
-  <label for="num_ingredients">How many ingredients does your recipe have? </label>
-  <input type="text" id="num_ingredients" name="num_ingredients"><br><br>
-  <label for="num_steps">How many steps does your recipe have? </label>
-  <input type="text" id="num_steps" name="num_steps"><br><br>
-  <input type=submit value='Create a Recipe'>
+<% if @category_id > 0 %>
+  <%= form_tag new_category_recipe_path(@category_id) do %>
+    <input type="hidden" name="category_id" value=@category_id>
+    <label for="num_ingredients">How many ingredients does your recipe have? </label>
+    <input type="text" id="num_ingredients" name="num_ingredients"><br><br>
+    <label for="num_steps">How many steps does your recipe have? </label>
+    <input type="text" id="num_steps" name="num_steps"><br><br>
+    <input type=submit value='Create a Recipe'>
+  <% end %>
+
+<% else %>
+  <%= form_tag ({controller: 'recipes', action: 'new', method: 'post'}) do %>
+    <label for="num_ingredients">How many ingredients does your recipe have? </label>
+    <input type="text" id="num_ingredients" name="num_ingredients"><br><br>
+    <label for="num_steps">How many steps does your recipe have? </label>
+    <input type="text" id="num_steps" name="num_steps"><br><br>
+    <input type=submit value='Create a Recipe'>
+  <% end %>
 <% end %>
+
+
