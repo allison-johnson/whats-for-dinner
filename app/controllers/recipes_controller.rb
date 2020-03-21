@@ -68,11 +68,16 @@ class RecipesController < ApplicationController
   end #show
 
   def search
-    binding.pry 
-    if params[:q].blank?
+    #binding.pry 
+    if params[:query].blank?
       flash[:alert] = "Empty search field!"
       redirect_to recipes_path 
-    
+    else
+      @recipes = Recipe.search(params[:query].downcase)
+      @categories = Category.all
+      render :index 
+      #binding.pry 
+      #pass @recipes to a form partial used by recipes#index
     end #if
   end #search 
 

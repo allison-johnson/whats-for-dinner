@@ -15,9 +15,7 @@ class Recipe < ApplicationRecord
     validates :num_steps, numericality: {only_integer: true, greater_than: 0} 
     validates :num_ingredients, numericality: {only_integer: true, greater_than: 0} 
 
-    #scope :by_owner, -> (owner_id) { where("owner_id = ?", owner_id)}
     scope :by_category, -> (category_id) { where("category_id = ?", category_id)}
-
 
     def recipe_ingredients_attributes=(ri_hash)
         ri_hash.each do |index, ri_info|
@@ -45,12 +43,8 @@ class Recipe < ApplicationRecord
       UserRecipe.where("recipe_id = ?", self.id).count 
     end
 
-    # def self.by_owner(owner_id)
-    #   where("owner_id = ?", owner_id)
-    # end
-
-    # def self.by_category(category)
-    #   where("category_id = ?", category.id)
-    # end
+    def self.search(name)
+      Recipe.where("name LIKE ?", "%#{name}%")
+    end #self.search
 
 end

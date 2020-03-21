@@ -10,7 +10,7 @@
   <h2>Search recipes:</h2>
   <%= form_tag("/search", method: "get") do %>
     <%= label_tag(:q, "Search for:") %>
-    <%= text_field_tag(:q) %>
+    <%= text_field_tag :query %>
     <%= submit_tag "Search" %>
   <% end %>
 <div>
