@@ -1,5 +1,9 @@
 To Do:
 [] Nest recipes under categories 
+    [x] Recipes index by category
+    [ ] New recipe by category
+    [ ] Adjust url's for slug
+    
     /categories/chicken/recipes -> loads chicken recipes
     /recipes -> loads all recipes
 

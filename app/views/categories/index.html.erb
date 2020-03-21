@@ -1,5 +1,5 @@
 <ul>
 <% @categories.each do |category| %>
-  <li><%= category.name %></li>
+  <li><%= link_to category.name, category_recipes_path(category) %></li>
 <% end %>
 </ul>
