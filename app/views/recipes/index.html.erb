@@ -1,4 +1,25 @@
-<h2>Recipe Index</h2>
+<div>
+  <h2>Filter recipes:</h2>
+  <%= form_tag("/recipes", method: "get") do %>
+    <%= select_tag "category", options_from_collection_for_select(@categories, "id", "name"), include_blank: true %>
+    <%= submit_tag "Filter by Category" %>
+  <% end %>
+<div>
+
+<div>
+  <h2>Search recipes:</h2>
+  <%= form_tag("/search", method: "get") do %>
+    <%= label_tag(:q, "Search for:") %>
+    <%= text_field_tag(:q) %>
+    <%= submit_tag "Search" %>
+  <% end %>
+<div>
+
+<% if flash[:has_user] %>
+  <h2><%= "#{@user.first_name} #{@user.last_name}'s Recipe Index" %></h2>
+<% else %>
+  <h2>Recipe Index</h2>
+<% end %>
 
 <ul>
 <% @recipes.each do |recipe| %>

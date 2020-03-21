@@ -2,40 +2,41 @@ class RecipesController < ApplicationController
   before_action :require_login, only: [:new, :create, :edit]
 
   def index
-    if params[:user_id]
-      user = User.find_by(id: params[:user_id])
-      if user.nil?
+    flash[:has_user] = false
+    if params[:user_id] #index route nested under users
+      flash[:has_user] = true 
+      @user = User.find_by(id: params[:user_id])
+      if @user.nil?
         flash[:alert] = "User not found!"
         redirect_to root_path
       else
-        @recipes = user.owned_recipes 
+        @recipes = @user.owned_recipes 
       end
-    else
+    else #non-nested index route
       @recipes = Recipe.all
+      @categories = Category.all
+      @users = User.all
+
+      if !params[:category].blank?
+        @recipes = @recipes.by_category(params[:category].to_i)
+      end
+
     end
   end #index
 
   def new
-    #binding.pry 
-    if is_integer_greater_than_zero(params[:num_ingredients].to_i) && is_integer_greater_than_zero(params[:num_steps].to_i)
-      @recipe = Recipe.new 
-      #@ingredients = Ingredient.all 
-      
-      @num_ingredients = params[:num_ingredients].to_i + 2
-      @num_ingredients.times do
-        @recipe.recipe_ingredients.build
-      end #do
-
-      @num_steps = params[:num_steps].to_i + 2
-      @num_steps.times do
-        @recipe.recipe_steps.build 
-      end #do
-      
+    if params[:user_id]
+      #binding.pry 
+      if current_user.id == params[:user_id].to_i
+        get_new_recipe
+      else
+        flash[:alert] = "Not authorized!"
+        redirect_to root_path 
+      end
     else
-      flash[:message] = "Please fill in both fields with a whole number greater than 0."
-      render :setup
+      get_new_recipe 
     end
-  end #index
+  end #new
 
   def create
     @recipe = Recipe.new(recipe_params)
@@ -65,6 +66,15 @@ class RecipesController < ApplicationController
     @ingredients = @recipe.recipe_ingredients 
     @steps = @recipe.recipe_steps
   end #show
+
+  def search
+    binding.pry 
+    if params[:q].blank?
+      flash[:alert] = "Empty search field!"
+      redirect_to recipes_path 
+    
+    end #if
+  end #search 
 
   def edit
     set_recipe 
@@ -144,6 +154,27 @@ class RecipesController < ApplicationController
 
   def is_integer_greater_than_zero(arg)
     arg > 0
+  end
+
+  def get_new_recipe
+    if is_integer_greater_than_zero(params[:num_ingredients].to_i) && is_integer_greater_than_zero(params[:num_steps].to_i)
+      @recipe = Recipe.new 
+      #@ingredients = Ingredient.all 
+      
+      @num_ingredients = params[:num_ingredients].to_i + 2
+      @num_ingredients.times do
+        @recipe.recipe_ingredients.build
+      end #do
+
+      @num_steps = params[:num_steps].to_i + 2
+      @num_steps.times do
+        @recipe.recipe_steps.build 
+      end #do
+      
+    else
+      flash[:message] = "Please fill in both fields with a whole number greater than 0."
+      render :setup
+    end
   end
 
 end #class 

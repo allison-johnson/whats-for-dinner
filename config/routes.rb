@@ -8,13 +8,10 @@ Rails.application.routes.draw do
   end
 
   root to: 'home#index'
-
-  #get '/recipes/1/ingredints', to: 'ingredients#index', as: 'recipe_ingredients'
-  #recipe_ingredients_path(@recipe)
   
-
   get '/recipes', to: 'recipes#index'
   get 'recipes/new', to: 'recipes#new'
+  get '/search', to: 'recipes#search', as: 'search_recipes'
   get 'recipes/:id/edit', to: 'recipes#edit', as: 'recipe_edit'
   get '/recipes/:id', to: 'recipes#show', as: 'recipe'
   get '/user_recipes', to: 'user_recipes#index', as: 'saved_recipes'
