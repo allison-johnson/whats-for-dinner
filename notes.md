@@ -1,22 +1,9 @@
 To Do:
-[] Nest recipes under categories 
-    [x] Recipes index by category
-        [ ] Account for category DNE
-    [ ] New recipe by category
-        [ ] Account for category DNE 
-    [ ] Adjust url's for slug
-
-    /categories/chicken/recipes -> loads chicken recipes
-    /recipes -> loads all recipes
-
-    /categories/chicken/recipes/new -> creates new chicken recipe
-
 [] Hard code categories (as a constant?)
-    Allow users to create new categories?
 
 [] Homepage: what should it have?
 
-[] Use a form partial
+[] Use form partials
 
 [] Omniauth for 3rd party login
 
@@ -35,6 +22,8 @@ Stretch!
 [] Search function searches recipe ingredients in addition to name
 
 [] Sort recipes alphabetically OR by popularity
+
+[] Adjust URL's for slug: /categories/chicken/recipes, rather than /categories/1/recipes
 
 [] Error messages if new recipe reloads - including specific error on ingredient
 

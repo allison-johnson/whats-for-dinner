@@ -7,11 +7,16 @@ class RecipesController < ApplicationController
 
     if params[:category_id]
       flash[:has_category] = true
-      @category = Category.find(params[:category_id])
+      @category = Category.find_by(id: params[:category_id])
       #Account for case where category does not exist
-      @categories = Category.all 
-      @recipes = Recipe.all.where("category_id = ?", @category.id)
-
+      if @category.nil?
+        flash[:alert] = "Category not found!"
+        redirect_to root_path 
+      else
+        @categories = Category.all 
+        @recipes = Recipe.all.where("category_id = ?", @category.id)
+      end
+  
     else
     #Turn all of this into the else
       if params[:user_id] #index route nested under users
@@ -40,11 +45,16 @@ class RecipesController < ApplicationController
     flash[:has_category] = false
 
     if params[:category_id]
-      flash[:has_category] = true
-      @category_id = params[:category_id].to_i 
-      get_new_recipe(@category_id) 
+      if Category.find_by(id: params[:category_id].to_i)
+        flash[:has_category] = true
+        @category_id = params[:category_id].to_i 
+        get_new_recipe(@category_id) 
+      else
+        flash[:alert] = "Category not found!"
+        redirect_to root_path 
+      end
 
-    else
+    else #no :category_id in url
       if params[:user_id]
         #binding.pry 
         if current_user.id == params[:user_id].to_i

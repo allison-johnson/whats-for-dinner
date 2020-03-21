@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
     @categories = Category.all 
   end #index
 
-  def new
-  end #new
+  # def new
+  # end #new
 
 end #class 

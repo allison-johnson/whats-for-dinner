@@ -30,3 +30,9 @@
   <li><%= link_to recipe.name, recipe_path(recipe) %></li>
 <% end %>
 </ul>
+
+<% if current_user && flash[:has_category] %>
+  <%= form_tag new_category_recipe_path, method: "get" do %>
+    <%= submit_tag "Submit a #{@category.name} Recipe" %>
+  <% end %>
+<% end %>
