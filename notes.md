@@ -6,8 +6,6 @@ To Do:
 
 [] Hard code categories (as a constant? Where?)
 
-[] Use form partials
-
 [] Omniauth for 3rd party login
 
 [] Organize Recipe Index page
