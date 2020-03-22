@@ -4,14 +4,10 @@ To Do:
     - if name but not quantity, throw and error
     - if neither, just don't try to create that
 
-[] Hard code categories (as a constant? Where?)
-
-[] Omniauth for 3rd party login
-
 [] Organize Recipe Index page
     - Use a table
     - Organize by category
-    - Within category, sort by number of saves
+    - Within category, sort by popularity
 
 [] Do I need these in my whitelisted params since I'm not using checkboxes anymore?
     :recipe_ingredients_ids
