@@ -13,16 +13,16 @@ jennifer = User.create(first_name: "Jennifer", last_name: "O'Boyle", email: "job
 tiffany = User.create(first_name: "Tiffany", last_name: "Michel", email: "tmichel@gmail.com", password: "secret", password_confirmation: "secret")
 #users = [allison, kim, jennifer, tiffany]
 
-#Create Categories
-chicken = Category.create(name: "Chicken")
-beef = Category.create(name: "Beef")
-seafood = Category.create(name: "Seafood")
-eggs = Category.create(name: "Eggs")
-beans = Category.create(name: "Beans")
-tofu = Category.create(name: "Tofu")
-pasta = Category.create(name: "Pasta")
-vegetable = Category.create(name: "Vegetable")
-grain = Category.create(name: "Grain")
+# #Create Categories
+# chicken = Category.create(name: "Chicken")
+# beef = Category.create(name: "Beef")
+# seafood = Category.create(name: "Seafood")
+# eggs = Category.create(name: "Eggs")
+# beans = Category.create(name: "Beans")
+# tofu = Category.create(name: "Tofu")
+# pasta = Category.create(name: "Pasta")
+# vegetable = Category.create(name: "Vegetable")
+# grain = Category.create(name: "Grain")
 
 #Create Recipes
 for num in 1..100
