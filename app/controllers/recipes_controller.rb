@@ -151,7 +151,7 @@ class RecipesController < ApplicationController
       (@num_ingredients - @recipe.recipe_ingredients.size).times do
         @recipe.recipe_ingredients.build
       end #do
-      render ':edit'
+      render :edit
     end #if
   end #update
 

@@ -1,5 +1,13 @@
 To Do:
-[] Hard code categories (as a constant?)
+[] div class="row"
+    div class="column"
+
+[] For ingredient validations: 
+    - if quantity but no name, throw an error
+    - if name but not quantity, throw and error
+    - if neither, just don't try to create that
+
+[] Hard code categories (as a constant? Where?)
 
 [] Homepage: what should it have?
 
@@ -34,5 +42,16 @@ Stretch!
 
 
 
-
-
+Old HTML from application.html.erb
+    <div class="nav">
+      <% if user_signed_in? %>
+        <%= link_to "My Recipe Box", saved_recipes_path %><br>
+        <%= link_to "Recipe Index", recipes_path %><br>
+        <%= link_to "Log Out", destroy_user_session_path, method: :delete %><br>
+        <%= link_to "Create a Recipe", recipes_new_path %><br>
+      <% else %>
+        <%= link_to "Recipe Index", recipes_path %><br>
+        <%= link_to "Log In", new_user_session_path %><br>
+        <%= link_to "Sign Up", new_user_registration_path %><br>
+      <% end %>
+    </div>
