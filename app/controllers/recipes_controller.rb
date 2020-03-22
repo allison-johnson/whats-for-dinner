@@ -114,7 +114,7 @@ class RecipesController < ApplicationController
 
   def edit
     set_recipe 
-
+    flash[:has_category] = false #to make partial work
     if @recipe.owner_id == current_user.id 
 
       @num_steps = @recipe.num_steps 

@@ -1,10 +1,8 @@
 <div id="error_explanation">
-  <ul>
   <% if flash[:message] %>
-    <li><%= flash[:message] %></li> 
+    <%= flash[:message] %> 
   <% end %>
-  </ul>
-</div>
+</div><br>
 
 <% if @category_id > 0 %>
   <%= form_tag new_category_recipe_path(@category_id) do %>

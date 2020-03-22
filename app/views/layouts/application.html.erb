@@ -46,12 +46,6 @@
     </div>
 
     <div class="container">
-    <% if user_signed_in? %>
-      <%= link_to "Log Out", destroy_user_session_path, method: :delete %><br>
-    <% end %>
-    </div>
-
-    <div class="container">
       <% if flash[:error] %>
         <p><%= flash[:error] %></p>
       <% end %>
@@ -65,6 +59,12 @@
       <% end %>
 
       <%= yield %>
+    </div>
+    <br>
+    <div class="container">
+    <% if user_signed_in? %>
+      <%= link_to "Log Out", destroy_user_session_path, method: :delete %><br>
+    <% end %>
     </div>
    
   </body>
